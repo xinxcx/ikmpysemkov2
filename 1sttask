@@ -1,0 +1,49 @@
+class Quadrilateral:
+    def __init__(self, a, b, c, d):
+        if a == 0 or b == 0 or c == 0 or d == 0:
+            raise ValueError("стороны не могут быть равны нулю")
+        self.a = a
+        self.b = b
+        self.c = c
+        self.d = d
+    def perimeter(self):
+        return self.a + self.b + self.c + self.d
+class Rectangle(Quadrilateral):
+    def __init__(self, length, width):
+        if length == 0 or width == 0:
+            raise ValueError("длина и ширина не могут быть равны нулю")
+        super().__init__(length, width, length, width)
+class Square(Rectangle):
+    def __init__(self, side):
+        if side == 0:
+            raise ValueError("сторона квадрата не может быть равна нулю")
+        super().__init__(side, side)
+print("тестируем фигуры")
+try:
+    print("\n1. четырехугольник:")
+    a = float(input("сторона a: "))
+    b = float(input("сторона b: "))
+    c = float(input("сторона c: "))
+    d = float(input("сторона d: "))
+    quad = Quadrilateral(a, b, c, d)
+    print(f"создан четырехугольник")
+    print(f"периметр: {quad.perimeter()}")
+except ValueError as e:
+    print(f"ошибка: {e}")
+try:
+    print("\n2. прямоугольник:")
+    length = float(input("длина: "))
+    width = float(input("ширина: "))
+    rect = Rectangle(length, width)
+    print(f"создан прямоугольник")
+    print(f"периметр: {rect.perimeter()}")
+except ValueError as e:
+    print(f"ошибка: {e}")
+try:
+    print("\n3. квадрат:")
+    side = float(input("сторона: "))
+    square = Square(side)
+    print(f"создан квадрат!")
+    print(f"периметр: {square.perimeter()}")
+except ValueError as e:
+    print(f"ошибка: {e}")
