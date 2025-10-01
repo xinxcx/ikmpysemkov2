@@ -1,0 +1,74 @@
+import pickle
+class QueueIterator:
+    def __init__(self, queue):
+        self.queue = queue
+        self.index = 0
+        self.all_elements = list(queue) + list(reversed(queue))
+    def __iter__(self):
+        return self
+    def __next__(self):
+        if self.index < len(self.all_elements):
+            element = self.all_elements[self.index]
+            self.index += 1
+            return element
+        else:
+            raise StopIteration
+def work_with_queue():
+    print("\nработа с очередью")
+    try:
+        print("введите числа для очереди через пробел:")
+        numbers = input().split()
+        P1 = []
+        for num in numbers:
+            P1.append(float(num))
+        print(f"наша очередь: {P1}")
+        K = int(input("количество элементов для удаления(K) = "))
+        if K > len(P1):
+            print("K не может быть больше длины очереди")
+            return
+        removed = []
+        for i in range(K):
+            if P1:
+                removed.append(P1.pop(0))
+        total = sum(removed)
+        new_first = None
+        if P1:
+            new_first = P1[0]
+        print(f"\nрезультаты:")
+        print(f"удаленные элементы: {removed}")
+        print(f"их сумма: {total}")
+        print(f"новая очередь: {P1}")
+        if new_first is not None:
+            print(f"новый первый элемент: {new_first}")
+        else:
+            print("очередь пуста")
+        data = {
+            'удаленные': removed,
+            'сумма': total,
+            'новая_очередь': P1,
+            'первый_элемент': new_first
+        }
+        with open('rez.dat', 'wb') as f:
+            pickle.dump(data, f)
+        print("данные сохранены в файл 'rez.dat'")
+        print("\nчтение из файла")
+        with open('rez.dat', 'rb') as f:
+            loaded_data = pickle.load(f)
+            print("прочитанные данные из файла:")
+            print(f"удаленные элементы: {loaded_data['удаленные']}")
+            print(f"сумма: {loaded_data['сумма']}")
+            print(f"новая очередь: {loaded_data['новая_очередь']}")
+            print(f"первый элемент: {loaded_data['первый_элемент']}")
+        print("\nобход очереди вперед и назад:")
+        iterator = QueueIterator(P1)
+        count = 0
+        for item in iterator:
+            if count < len(P1):
+                print(f"вперед: {item}")
+            else:
+                print(f"назад: {item}")
+            count += 1
+    except Exception as e:
+        print(f"произошла ошибка: {e}")
+if __name__ == "__main__":
+    work_with_queue()
