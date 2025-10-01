@@ -1,6 +1,6 @@
 class Quadrilateral:
     def __init__(self, a, b, c, d):
-        if a == 0 or b == 0 or c == 0 or d == 0:
+        if a <= 0 or b <= 0 or c <= 0 or d <= 0:
             raise ValueError("стороны не могут быть равны нулю")
         self.a = a
         self.b = b
@@ -9,13 +9,13 @@ class Quadrilateral:
     def perimeter(self):
         return self.a + self.b + self.c + self.d
 class Rectangle(Quadrilateral):
-    def __init__(self, length, width):
-        if length == 0 or width == 0:
+    def __init__(self,  length, width):
+        if length <= 0 or width <= 0:
             raise ValueError("длина и ширина не могут быть равны нулю")
         super().__init__(length, width, length, width)
 class Square(Rectangle):
     def __init__(self, side):
-        if side == 0:
+        if side <= 0:
             raise ValueError("сторона квадрата не может быть равна нулю")
         super().__init__(side, side)
 print("тестируем фигуры")
