@@ -1,0 +1,47 @@
+def find_connected_component(n, s, matrix):
+    visited = [False] * n
+    component = []
+    queue = [s - 1]
+    visited[s - 1] = True
+    while queue:
+        current = queue.pop(0)
+        component.append(current + 1)
+        for neighbor in range(n):
+            if matrix[current][neighbor] == 1 and not visited[neighbor]:
+                visited[neighbor] = True
+                queue.append(neighbor)
+    component.sort()
+    return component
+print("компонента связности графа")
+try:
+    n, s = map(int, input("введите n и s: ").split())
+    if not (1 <= n <= 100):
+        print("ошибка: n должно быть от 1 до 100")
+        exit()
+    if not (1 <= s <= n):
+        print("ошибка: s должно быть от 1 до n")
+        exit()
+    print(f"введите матрицу смежности {n}x{n}:")
+    matrix = []
+    for i in range(n):
+        row = list(map(int, input().split()))
+        if len(row) != n:
+            print(f"ошибка: нужно ввести {n} чисел")
+            exit()
+        for num in row:
+            if num not in [0, 1]:
+                print("ошибка: используйте только 0 и 1")
+                exit()
+        matrix.append(row)
+    for i in range(n):
+        for j in range(n):
+            if matrix[i][j] != matrix[j][i]:
+                print("ошибка: матрица должна быть симметричной")
+                exit()
+    component = find_connected_component(n, s, matrix)
+    print(len(component))
+    print(" ".join(map(str, component)))
+except ValueError:
+    print("ошибка: введите числа корректно")
+except Exception as e:
+    print(f"ошибка: {e}")
